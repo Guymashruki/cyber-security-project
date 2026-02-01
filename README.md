@@ -6,26 +6,26 @@ This project analyzes network activity logs, detects complex security threats us
 ![Project Status](https://img.shields.io/badge/Status-Completed-success)
 ![Tech Stack](https://img.shields.io/badge/Stack-Python%20|%20React%20|%20FastAPI-blue)
 
-## ⚡ Key Features & Detection Logic
+##  Key Features & Detection Logic
 
-### 🧠 How It Works (The Brain)
+###  How It Works (The Brain)
 The system parses raw logs (`activity_log.csv`) and identifies anomalies based on the following security policies:
 
-1.  **🚫 Brute Force Attacks:**
+1.  ** Brute Force Attacks:**
     * **Logic:** Detects **3 or more** failed login attempts (`login_failed`) from a single IP within a **5-minute** rolling window.
     * *Why?* Identifies aggressive password guessing attempts.
 
-2.  **🌍 Geo-Anomalies (Impossible Travel):**
+2.  ** Geo-Anomalies (Impossible Travel):**
     * **Logic:** Flags users who change IP addresses (jump locations) within less than **30 minutes**.
     * *Why?* It is physically impossible to travel between different network locations in such a short time.
 
-3.  **💀 Suspicious IPs (Access Control):**
+3.  ** Suspicious IPs (Access Control):**
     * **Logic:** Flags any access attempt from an IP address that **does not start with** `192.168.` (Internal Office Range).
     * *Why?* Enforces a strict "Internal Use Only" policy. Any external access is treated as a potential breach.
 
 ---
 
-## 🛠️ Tech Stack & Requirements
+##  Tech Stack & Requirements
 
 ### Prerequisites
 * **Python 3.8+**
@@ -38,12 +38,12 @@ The system parses raw logs (`activity_log.csv`) and identifies anomalies based o
 
 ---
 
-## 🚀 Installation & Running Guide
+##  Installation & Running Guide
 
 Follow these steps to get the system running locally.
 **You will need 3 separate terminal windows.**
 
-### Step 1: Start the Backend Server (Terminal 1) 🧠
+### Step 1: Start the Backend Server (Terminal 1) 
 This starts the REST API server that acts as the bridge between the data and the dashboard.
 
 1.  Open a terminal in the **root folder**.
@@ -57,7 +57,7 @@ This starts the REST API server that acts as the bridge between the data and the
     ```
     > ✅ **Success:** You should see: *Application startup complete*.
 
-### Step 2: Generate & Upload Data (Terminal 2) 📊
+### Step 2: Generate & Upload Data (Terminal 2) 
 This step simulates the "Security Agent" – it analyzes the logs and sends the report to the server.
 
 1.  Open a new terminal in the **root folder**.
@@ -71,7 +71,7 @@ This step simulates the "Security Agent" – it analyzes the logs and sends the 
     ```
     > ✅ **Success:** You should see: *SUCCESS! Data uploaded to server*.
 
-### Step 3: Start the Frontend Dashboard (Terminal 3) 🎨
+### Step 3: Start the Frontend Dashboard (Terminal 3) 
 This launches the React user interface.
 
 1.  Open a new terminal.
@@ -90,11 +90,11 @@ This launches the React user interface.
 
 ### 🏁 Final Step
 Open your browser and navigate to the link shown in the terminal:
-👉 **http://localhost:5173**
+ **http://localhost:5173**
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```text
 rsecurity-dashboard/
