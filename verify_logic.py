@@ -1,14 +1,12 @@
 import pandas as pd
 from datetime import timedelta
 
-# --- עדכון: שם הקובץ הותאם ל-activity_log.csv ---
 LOG_FILE = 'activity_log.csv'
 INTERNAL_PREFIX = '192.168.'
 
 def verify_data():
     print("🕵️‍♂️ Starting Data Verification Audit...\n")
     
-    # טעינת הנתונים
     try:
         df = pd.read_csv(LOG_FILE)
         df['timestamp'] = pd.to_datetime(df['timestamp'])

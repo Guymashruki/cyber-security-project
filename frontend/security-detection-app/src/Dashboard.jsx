@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Chart from 'chart.js/auto';
 
-// --- רכיב כרטיס סטטיסטיקה ---
 const StatCard = ({ title, value, color }) => (
     <div className={`bg-white p-6 rounded-xl shadow-sm border-l-4 ${color} transition hover:shadow-md`}>
         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{title}</p>
@@ -9,7 +8,6 @@ const StatCard = ({ title, value, color }) => (
     </div>
 );
 
-// --- הרכיב הראשי ---
 const Dashboard = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -51,7 +49,6 @@ const Dashboard = () => {
         });
     }, [data, searchTerm]);
 
-    // --- יצירת הגרף ---
     useEffect(() => {
         if (data && data.anomalies && chartRef.current) {
             
@@ -94,7 +91,6 @@ const Dashboard = () => {
             });
         }
         
-        // ניקוי ביציאה
         return () => {
             if (chartInstance.current) chartInstance.current.destroy();
         };

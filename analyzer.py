@@ -2,13 +2,12 @@ import pandas as pd
 import json
 from datetime import timedelta
 
-# --- הגדרות ---
 LOG_FILE = 'activity_log.csv'
 OUTPUT_FILE = 'security_report.json'
 INTERNAL_IP_PREFIX = '192.168.'
 BRUTE_FORCE_WINDOW = timedelta(minutes=5)
 BRUTE_FORCE_THRESHOLD = 3
-GEO_HOP_WINDOW = timedelta(minutes=30)  # אם החלפת IP תוך פחות מ-30 דקות - זה חשוד
+GEO_HOP_WINDOW = timedelta(minutes=30)  
 
 def load_data(filepath):
     try:
@@ -62,23 +61,18 @@ def detect_geo_hops(df):
     """3. זיהוי מעבר מהיר וחשוד בין כתובות IP (Geo-hopping / Impossible Travel)"""
     anomalies = []
     
-    # מיון לפי משתמש וזמן (כדי לראות את רצף הפעולות של כל אדם)
     df_sorted = df.sort_values(by=['user_id', 'timestamp'])
     
     for user, group in df_sorted.groupby('user_id'):
-        # יצירת עמודות עזר: מה היה ה-IP הקודם ומתי זה קרה
         group['prev_ip'] = group['ip_address'].shift(1)
         group['prev_time'] = group['timestamp'].shift(1)
         
-        # סינון: רק מקרים שבהם ה-IP השתנה
         ip_changes = group[group['ip_address'] != group['prev_ip']]
         
         for _, row in ip_changes.iterrows():
-            # אם יש נתונים קודמים (לא השורה הראשונה)
             if pd.notna(row['prev_time']):
                 time_diff = row['timestamp'] - row['prev_time']
                 
-                # אם השינוי קרה מהר מדי (פחות מ-30 דקות)
                 if time_diff < GEO_HOP_WINDOW:
                     anomalies.append({
                         "timestamp": str(row['timestamp']),
@@ -96,7 +90,6 @@ def main():
 
     anomalies = []
     
-    # הרצת כל 3 הבדיקות
     print("Running Brute Force detection...")
     anomalies.extend(detect_brute_force(df))
     
@@ -106,7 +99,6 @@ def main():
     print("Running Geo-Hop detection...")
     anomalies.extend(detect_geo_hops(df))
     
-    # הסרת כפילויות חכמה (לפי מפתח ייחודי)
     unique_anomalies = {f"{a['timestamp']}_{a['user_id']}_{a['reason']}": a for a in anomalies}.values()
     
     report = {

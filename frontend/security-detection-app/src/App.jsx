@@ -1,4 +1,4 @@
-import Dashboard from './Dashboard'; // הוספתי .jsx כדי שהמחשב יזהה את הקובץ
+import Dashboard from './Dashboard'; 
 
 function App() {
   return (
